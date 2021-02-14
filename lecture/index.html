@@ -1,0 +1,38 @@
+<html>
+    <head>
+        <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+        <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+        <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script> <!--최신문법으로 쓸수있음(자바스크립트안에 xml을쓸수있음)-->
+    </head>
+    <body>
+        <div id="root"></div>  <!--결과는 이렇게 되는것임 <div id="root"><button>Like</button></div>-->
+        <script type="text/babel">
+            const e = React.createElement; //요소를 생성하겠다는 뜻
+
+            class LikeButton extends React.Component { //class하나가 컴포넌트 하나임
+                constructor(props) {
+                    super(props);
+                    this.state = {     //state -> 상태를 바꿔줌 (보이진않음)
+                      liked : false,
+                    };
+                }
+
+                render() {
+                    return <button type="submit" onClick={() => { this.setState({liked :true})}}>
+                        {this.state.liked === true ?'Liked' : 'Like'}
+                    </button>;
+                    // JSX (JS+XML)
+                    // return e(
+                    //     'button',
+                    //     { onClick: () => { this.setState({ liked: true})}, type:'submit' },
+                    //     this.state.liked === true ?'Liked' : 'Like',
+                    // );
+                    //<button>Like</button> 이런 버튼을 만들겠다
+                }
+            }
+        </script>
+        <script type="text/babel">
+            ReactDOM.render(<LikeButton />, document.querySelector('#root'));
+        </script>
+    </body>
+</html>

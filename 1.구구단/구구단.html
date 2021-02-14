@@ -1,0 +1,62 @@
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>구구단</title>
+        <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+        <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+        <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script> <!--최신문법으로 쓸수있음(자바스크립트안에 xml을쓸수있음)-->
+    </head>
+    <body>
+        <div id="root"></div>  <!--결과는 이렇게 되는것임 <div id="root"><button>Like</button></div>-->
+        <script type="text/babel">
+            class GuGuDan extends React.Component { //class하나가 컴포넌트 하나임
+                constructor(props) {
+                super(props);
+                this.state = {  //1. 변할것들을 state로 만들고
+                    first: Math.ceil(Math.random() * 9), //첫번째 숫자  //ceil->반올림해줌
+                    second: Math.ceil(Math.random() * 9),
+                    value : '', //입력창에 들어갈값(처음엔 아무것도 없음)
+                    result : '', // 결과 값 (처음엔 아무것도 없음)
+                    }
+                 };
+
+                onSubmit = (e) => {
+                    e.preventDefault();
+                    if (parseInt(this.state.value) === this.state.first * this.state.second) {
+                        this.setState({
+                            result: '정답',
+                            first: Math.ceil(Math.random() * 9),
+                            second: Math.ceil(Math.random() * 9),
+                            value: '',
+                        });
+                      } else {
+                        this.setState({
+                          result: '땡',
+                          value: '',
+                      });
+                    }
+                };
+
+                onChange = (e) => {
+                    this.setState({ value: e.target.value});
+                };
+
+                render() { //2. xml안에 변하는 부분을 알맞게 넣어줌
+                    return (/*중괄호사이에는 자바스크립트를 쓸수있다는 뜻*/ /*input같은 싱글태그에 /을 붙여야햠(html이아니고xml이기때문)*/
+                        <div>
+                            <div>{this.state.first} 곱하기 {this.state.second}는?</div>
+                            <form onSubmit={this.onSubmit} >
+                                <input type="number" value={this.state.value} onChange={this.onChange} />
+                                <button>입력!</button>
+                            </form>
+                            <div>{this.state.result}</div>
+                        </div>
+                    ) ;
+                }
+            }
+        </script>
+        <script type="text/babel">
+            ReactDOM.render(<div><GuGuDan /><GuGuDan /><GuGuDan /></div>, document.querySelector('#root'));
+        </script>
+    </body>
+</html>
